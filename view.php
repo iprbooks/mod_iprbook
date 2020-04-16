@@ -39,32 +39,35 @@ $token = get_config('iprbooks', 'user_token');
 $client = new Client($user_id, $token);
 
 $integrationManager = new IntegrationManager($client);
-$autoLoginUrl = $integrationManager->generateAutoAuthUrl($USER->email, "", User::STUDENT);
 
 $book = new Book($client);
 $book->get($moduleinstance->iprbookid);
+$autoLoginUrl = $integrationManager->generateAutoAuthUrl($USER->email, "", User::STUDENT, $book->getId());
 
-$template = "<div class=\"ipr-item\" data-id=\"" . $book->getId() . "\">
-                    <div class=\"row\" style='padding: 10px'>
-                        <div id=\"ipr-item-image-" . $book->getId() . "\" class=\"col-sm-2 pub-image\">
-                            <img src=\"" . $book->getImage() . "\" class=\"img-responsive thumbnail\" alt=\"\">
-                            <a id=\"ipr-item-url-" . $book->getId() . "\" href=\"" . $autoLoginUrl . '&goto=' . $book->getId() . "\"></a>
-                        </div>
-                        <div class=\"col-sm-8\">
-                            <div id=\"ipr-item-title-" . $book->getId() . "\"><strong>Название:</strong> " . $book->getTitle() . " </div>
-                            <div id=\"ipr-item-title_additional-" . $book->getId() . "\" ><strong>Альтернативное
-                                название:</strong> " . $book->getTitleAdditional() . " </div>
-                            <div id=\"ipr-item-pubhouse-" . $book->getId() . "\"><strong>Издательство:</strong> " . $book->getPubhouse() . " </div>
-                            <div id=\"ipr-item-authors-" . $book->getId() . "\"><strong>Авторы:</strong> " . $book->getAuthors() . " </div>
-                            <div id=\"ipr-item-pubyear-" . $book->getId() . "\"><strong>Год издания:</strong> " . $book->getPubyear() . " </div>
-                            <div id=\"ipr-item-description-" . $book->getId() . "\" ><strong>Описание:</strong> " . $book->getDescription() . " </div>
-                            <div id=\"ipr-item-keywords-" . $book->getId() . "\" ><strong>Ключевые слова:</strong> " . $book->getKeywords() . " </div>
-                            <div id=\"ipr-item-pubtype-" . $book->getId() . "\" ><strong>Тип издания:</strong> " . $book->getPubtype() . " </div>
-                            <br>
-                            <a id=\"ipr-item-detail-read\" class=\"btn btn-secondary\" target=\"_blank\" href=\"" . $autoLoginUrl . '&goto=' . $book->getId() . "\">Читать</a>
-                        </div>
+$style = file_get_contents($CFG->dirroot . "/mod/iprbook/style/iprbook.css");
+
+$template = "<style>" . $style . "</style>
+			<div class=\"ipr-item\" data-id=\"" . $book->getId() . "\">
+                <div class=\"row\" style='padding: 10px'>
+                    <div id=\"ipr-item-image-" . $book->getId() . "\" class=\"col-sm-2 pub-image\">
+                        <img src=\"" . $book->getImage() . "\" class=\"img-responsive thumbnail\" alt=\"\">
+                        <a id=\"ipr-item-url-" . $book->getId() . "\" href=\"" . $autoLoginUrl . '&goto=' . $book->getId() . "\"></a>
                     </div>
-                </div>";
+                    <div class=\"col-sm-8\">
+                        <div id=\"ipr-item-title-" . $book->getId() . "\"><strong>Название:</strong> " . $book->getTitle() . " </div>
+                        <div id=\"ipr-item-title_additional-" . $book->getId() . "\" ><strong>Альтернативное
+                            название:</strong> " . $book->getTitleAdditional() . " </div>
+                        <div id=\"ipr-item-pubhouse-" . $book->getId() . "\"><strong>Издательство:</strong> " . $book->getPubhouse() . " </div>
+                        <div id=\"ipr-item-authors-" . $book->getId() . "\"><strong>Авторы:</strong> " . $book->getAuthors() . " </div>
+                        <div id=\"ipr-item-pubyear-" . $book->getId() . "\"><strong>Год издания:</strong> " . $book->getPubyear() . " </div>
+                        <div id=\"ipr-item-description-" . $book->getId() . "\" ><strong>Описание:</strong> " . $book->getDescription() . " </div>
+                        <div id=\"ipr-item-keywords-" . $book->getId() . "\" ><strong>Ключевые слова:</strong> " . $book->getKeywords() . " </div>
+                        <div id=\"ipr-item-pubtype-" . $book->getId() . "\" ><strong>Тип издания:</strong> " . $book->getPubtype() . " </div>
+                        <br>
+                        <a id=\"ipr-item-detail-read\" class=\"btn btn-secondary\" target=\"_blank\" href=\"" . $autoLoginUrl . '&goto=' . $book->getId() . "\">Читать</a>
+                    </div>
+                </div>
+            </div>";
 
 echo $OUTPUT->header();
 
