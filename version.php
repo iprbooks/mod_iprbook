@@ -3,7 +3,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_iprbook';
-$plugin->version = 2020041600;
+$plugin->version = 2020041700;
 $plugin->requires = 2013051401;
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = 'v1.1';
+$plugin->release = 'v1.2';
