@@ -232,3 +232,10 @@ a:not([href]):not([tabindex]) {
     flex: 0 0 75%;
     max-width: 75%;
 }
+
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #1177d1;
+    border-color: #1177d1;
+}
