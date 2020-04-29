@@ -52,6 +52,9 @@ foreach ($booksCollection as $book) {
 
 $content .= pagination($booksCollection->getTotalCount(), $page + 1);
 
+if (mb_strlen($content) < 200) {
+    $content = '<div style="font-size: 150%; text-align: center;">По вашему запросу ничего не найдено</div>' . $content;
+}
 echo json_encode(['page' => $page, 'html' => $content, 'details' => $details]);
 
 function getTemplate(Book $book, $autoLoginUrl)

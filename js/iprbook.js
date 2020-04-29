@@ -1,5 +1,13 @@
 $(document).ready(function () {
     send_request(0, $("#id_iprbookid").val());
+
+    $('.iprbook-form-control').keypress(function (event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("iprbook-search").click();
+        }
+    });
 });
 
 $("#iprbook-search").click(function () {
